@@ -1,11 +1,10 @@
 import time
 import displayio
-
 from soko import theme
 from soko.hardware import setup_hardware
 from soko.screens.hello_world import HelloWorld
 from soko.screens.loading import Loading
-
+from soko.net import Net
 
 def run():
     display = setup_hardware()
@@ -31,6 +30,9 @@ def run():
 
     last = time.monotonic()
     switch_at = last + 5.0
+
+    net = Net()
+    net.connect()
 
     while True:
         now = time.monotonic()

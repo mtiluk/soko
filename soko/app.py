@@ -1,8 +1,11 @@
 import time
 import displayio
+
+from soko import theme
 from soko.hardware import setup_hardware
 from soko.screens.hello_world import HelloWorld
-import soko.theme as theme
+from soko.screens.loading import Loading
+
 
 def run():
     display = setup_hardware()
@@ -10,17 +13,32 @@ def run():
     root = displayio.Group()
     display.root_group = root
 
-    screens = {"hello": HelloWorld()}
+    screens = {"hello": HelloWorld(), "loading": Loading()}
     for screen in screens.values():
         root.append(screen.group)
 
-    current = screens["hello"]
-    current.group.hidden = False
-    current.enter()
+    current = None
+
+    def show(name):
+        nonlocal current
+        if current is not None:
+            screens[current].group.hidden = True
+        current = name
+        screens[name].enter()
+        screens[name].group.hidden = False
+
+    show("loading")
 
     last = time.monotonic()
+    switch_at = last + 5.0
+
     while True:
         now = time.monotonic()
         dt, last = now - last, now
-        current.tick(dt)
+
+        if now >= switch_at:
+            switch_at = now + 5.0
+            show("hello" if current == "loading" else "loading")
+
+        screens[current].tick(dt)
         time.sleep(theme.FRAME_SLEEP)

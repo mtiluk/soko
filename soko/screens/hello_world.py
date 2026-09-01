@@ -1,22 +1,21 @@
-import displayio
 import terminalio
 from adafruit_display_text import label
+from .base import Screen
+import soko.theme as theme
 
-class HelloWorld:
-    def __init__(self, display):
-        self.number = 0
-
+class HelloWorld(Screen):
+    def build(self):
         self.label = label.Label(
             font=terminalio.FONT,
             text="0",
-            color=0xE0E0E0,
+            color=theme.BRIGHT,
         )
         self.label.anchor_point = (0.5, 0.5)
-        self.label.anchored_position = (64, 32)
+        self.label.anchored_position = (theme.WIDTH // 2, theme.HEIGHT // 2)
+        self.group.append(self.label)
 
-        root = displayio.Group()
-        root.append(self.label)
-        display.root_group = root
+    def enter(self):
+        self.number = 0
 
     def tick(self, dt):
         self.number += 1

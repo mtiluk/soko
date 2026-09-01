@@ -10,7 +10,6 @@ HEADERS = {
     "Accept": "application/json",
 }
 
-
 class Net:
     def __init__(self):
         self.pool = None

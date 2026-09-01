@@ -13,7 +13,6 @@ WAVE_PITCH = 0.55
 
 SHADES = (theme.FAINT, theme.DIM, theme.MID, theme.BRIGHT)
 
-
 class Loading(Screen):
     def build(self):
         self._t = 0.0
@@ -30,7 +29,6 @@ class Loading(Screen):
         )
         grid.append(displayio.TileGrid(self._bitmap, pixel_shader=palette))
         self.group.append(grid)
-
 
     def enter(self):
         self._t = 0.0

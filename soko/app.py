@@ -1,7 +1,7 @@
+import os
 import time
 
 import displayio
-
 from soko import theme
 from soko.api import FlightAPI
 from soko.hardware import setup_hardware
@@ -10,9 +10,8 @@ from soko.net import Net
 from soko.screens.flight import FlightScreen
 from soko.screens.loading import Loading
 
-CALLSIGN = "EZY39DR"
+CALLSIGN = os.getenv("CALLSIGN")
 POLL_SECONDS = 15
-
 
 def run():
     display = setup_hardware()
@@ -41,6 +40,7 @@ def run():
     net = Net()
     net.connect()
 
+    print("app: connected, callsign =", CALLSIGN)
     state = FlightState(CALLSIGN)
     api = FlightAPI(net)
 

@@ -7,7 +7,6 @@ from .base import Screen
 
 ROW_1, ROW_2, ROW_3 = 14, 30, 46
 
-
 class FlightScreen(Screen):
     def build(self):
         self._callsign = self._row(ROW_1, theme.BRIGHT)

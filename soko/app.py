@@ -1,10 +1,16 @@
+import time
 from soko.hardware import setup_hardware
-from soko.screens.hello_world import draw_hello_world
+from soko.screens.hello_world import HelloWorld
+
+FRAME_SLEEP = 0
 
 def run():
     display = setup_hardware()
+    screen = HelloWorld(display)
 
-    draw_hello_world(display)
-
+    last = time.monotonic()
     while True:
-        pass
+        now = time.monotonic()
+        dt, last = now - last, now
+        screen.tick(dt)
+        time.sleep(FRAME_SLEEP)

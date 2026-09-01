@@ -1,10 +1,18 @@
 import time
+
 import displayio
+
 from soko import theme
+from soko.api import FlightAPI
 from soko.hardware import setup_hardware
-from soko.screens.hello_world import HelloWorld
-from soko.screens.loading import Loading
+from soko.model import FlightState
 from soko.net import Net
+from soko.screens.flight import FlightScreen
+from soko.screens.loading import Loading
+
+CALLSIGN = "EZY39DR"
+POLL_SECONDS = 15
+
 
 def run():
     display = setup_hardware()
@@ -12,7 +20,7 @@ def run():
     root = displayio.Group()
     display.root_group = root
 
-    screens = {"hello": HelloWorld(), "loading": Loading()}
+    screens = {"loading": Loading(), "flight": FlightScreen()}
     for screen in screens.values():
         root.append(screen.group)
 
@@ -20,6 +28,8 @@ def run():
 
     def show(name):
         nonlocal current
+        if name == current:
+            return
         if current is not None:
             screens[current].group.hidden = True
         current = name
@@ -28,19 +38,26 @@ def run():
 
     show("loading")
 
-    last = time.monotonic()
-    switch_at = last + 5.0
-
     net = Net()
     net.connect()
+
+    state = FlightState(CALLSIGN)
+    api = FlightAPI(net)
+
+    last = time.monotonic()
+    last_poll = 0.0
 
     while True:
         now = time.monotonic()
         dt, last = now - last, now
 
-        if now >= switch_at:
-            switch_at = now + 5.0
-            show("hello" if current == "loading" else "loading")
+        if now - last_poll >= POLL_SECONDS:
+            last_poll = now
+            api.fetch_position(state)
+            api.fetch_route(state)
+            screens["flight"].update(state)
+
+        show("flight" if state.have_anything() else "loading")
 
         screens[current].tick(dt)
         time.sleep(theme.FRAME_SLEEP)

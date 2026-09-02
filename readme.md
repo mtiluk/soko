@@ -1,3 +1,5 @@
+![Tracking Individual Flight](./images/flight-tracking.jpg)
+
 # soko
 
 A real-time flight tracker and radar for RGB LED Matrix Panels, written using CircuitPython. Select a single callsign to follow an individual aircraft, or let it scan the sky overhead and cycle through whatever is nearby. 

@@ -76,3 +76,9 @@ You should play around with the `RADAR_NM` value to find a balance between seein
 All positioning lives in `theme.py` as named constants: row baselines, margins, logo origin and scale, the brightness ladder. Adjusting the layout means editing numbers in one file rather than hunting through the screens.
 
 The brightness values are multiples of `0x20` because the matrix runs at `bit_depth=3`, giving eight levels per channel. Anything between those steps rounds away on the panel, so intermediate values gain you nothing.
+
+## Demo
+
+![Loading Screen](./images/loading.jpg 'Loading Screen')
+![Radar Screen One](./images/radar-one.jpg 'Radar Screen One')
+![Radar Screen Two](./images/radar-two.jpg 'Radar Screen Two')

@@ -1,5 +1,4 @@
 import displayio
-import terminalio
 from adafruit_display_text import label
 
 from .. import theme
@@ -14,7 +13,7 @@ class FlightScreen(Screen):
         self._actype = self._row(ROW_3, theme.DIM)
 
     def _row(self, y, colour):
-        lbl = label.Label(terminalio.FONT, text="", color=colour)
+        lbl = label.Label(theme.FONT, text="", color=colour)
         lbl.anchor_point = (0.5, 0.5)
         lbl.anchored_position = (theme.WIDTH // 2, y)
         self.group.append(lbl)

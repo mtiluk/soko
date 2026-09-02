@@ -2,3 +2,8 @@ WIFI_SSID = ""
 WIFI_PASSWORD = ""
 
 CALLSIGN = ""
+
+MODE = "radar"
+HOME_LAT = "52.3676"
+HOME_LON = "4.9041"
+RADAR_NM = 30
